@@ -9,9 +9,9 @@ const Input = (props)=>(
             const filterVal = e.target.value;
             props.dispatch(filterBy(filterVal));
         }}>
-            <option value="Felony">Felony</option>
-            <option value="Misdemeanor">Misdemeanor</option>
-            <option value="Violation">Violation</option>
+            <option value="FELONY">Felony</option>
+            <option value="MISDEMEANOR">Misdemeanor</option>
+            <option value="VIOLATION">Violation</option>
         </select>
     </div>
 )

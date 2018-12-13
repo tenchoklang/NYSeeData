@@ -1,5 +1,4 @@
 import axios from 'axios';
-import apiKey from '../api_key/news_apikey'
 
 
 export const setNypdData = (data)=>({
@@ -7,14 +6,15 @@ export const setNypdData = (data)=>({
     payload: data
 });
 
-export const startGetData = (lat, lon, offense) =>{
+export const startGetData = (lat, lon, filter) =>{
     // let baseUrl = `https://data.cityofnewyork.us/resource/7x9x-zpz6.json?$where=within_circle(lat_lon, ${lat}, ${lon}, 500)&law_cat_cd=FELONY`;
-    let baseUrl = `https://data.cityofnewyork.us/resource/7x9x-zpz6.json?$where=within_circle(lat_lon, ${lat}, ${lon}, 500)&law_cat_cd=VIOLATION`
-    console.log(lat,lon)
+    let baseUrl = `https://data.cityofnewyork.us/resource/7x9x-zpz6.json?$where=within_circle(lat_lon, ${lat}, ${lon}, 500)&law_cat_cd=${filter}`
+    console.log(lat,lon, filter);
     return (dispatch)=>{
         axios.get(baseUrl)
         .then(function (response) {
             console.log('DATA LENGTH: ',response.data.length);
+            console.log(response.data);
             dispatch(setNypdData(response.data));
         })
         .catch(function (error) {

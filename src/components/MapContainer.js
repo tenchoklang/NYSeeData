@@ -26,6 +26,7 @@ class MapContainer extends React.Component {
         let latitude = clickEvent.latLng.lat();
         let longitude = clickEvent.latLng.lng();
 
+        console.log(this.props.filters);
         //make the click position the center of the map
         this.setState(()=>{
             return {
@@ -35,8 +36,9 @@ class MapContainer extends React.Component {
                 }
             }
         })
+        const filter = this.props.filters;
         //Every time a user clicks we should dispatch an action to get the data for the given coordinates
-        this.props.dispatch(startGetData(latitude, longitude));
+        this.props.dispatch(startGetData(latitude, longitude, filter));
      }
 
     render() {
@@ -47,13 +49,13 @@ class MapContainer extends React.Component {
             {lat: 25.774, lng: -80.190}
           ];
       return (
+        <div className='map'>
         <Map google={this.props.google} 
             zoom={14}
             initialCenter={this.state.center}
             center={this.state.center}
             onClick={this.mapClicked}
-            style={{height: '400px'}}
-            className='map'
+            style={{position:'relative', height: '400px', width: '100%'}}
             >
 
             {this.props.data.map((val, index)=>{
@@ -78,6 +80,7 @@ class MapContainer extends React.Component {
                 fillOpacity={0.35} />
 
         </Map>
+        </div>
       );
     }
   }
@@ -90,7 +93,8 @@ const WrappedContainer = GoogleApiWrapper({
 const mapStateToProps = (state) =>{
     console.log(state);
     return {
-        data: state.data
+        data: state.data,
+        filters: state.filter
     }
 }
 
