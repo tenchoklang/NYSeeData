@@ -2,6 +2,7 @@ import React from 'react';
 import {Map, Polygon,InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 import {connect} from 'react-redux';
 import {startGetData} from '../actions/data'
+import {setLocation} from '../actions/location'
 
 
 //lat 40.738782
@@ -23,8 +24,13 @@ class MapContainer extends React.Component {
     //registers the users click on the map
     mapClicked(mapProps, map, clickEvent) {
         //gets the lat and lon of the place of the click
-        let latitude = clickEvent.latLng.lat();
-        let longitude = clickEvent.latLng.lng();
+        const latitude = clickEvent.latLng.lat();
+        const longitude = clickEvent.latLng.lng();
+
+        const locationObj = {
+            lat: latitude,
+            lon: longitude
+        }
 
         console.log(this.props.filters);
         //make the click position the center of the map
@@ -39,6 +45,8 @@ class MapContainer extends React.Component {
         const filter = this.props.filters;
         //Every time a user clicks we should dispatch an action to get the data for the given coordinates
         this.props.dispatch(startGetData(latitude, longitude, filter));
+        //update the redux state so when the user changes the filters the location is available
+        this.props.dispatch(setLocation(locationObj));
      }
 
     render() {

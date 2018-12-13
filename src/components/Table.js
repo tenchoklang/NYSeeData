@@ -10,12 +10,12 @@ const Table = (props) => (
                     <th>Offense Description</th>
                     <th>Suspect Race</th>
                 </tr>
-                {props.data.map((value)=>{
+                {props.data.map((value, index)=>{
                     const borough = value.boro_nm;
                     const offDesc = value.ofns_desc;
                     const suspRace = value.susp_race;
                     return (
-                        <tr>
+                        <tr key={index}>
                             <td>{borough}</td>
                             <td>{offDesc}</td>
                             <td>{suspRace}</td>
